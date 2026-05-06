@@ -25,9 +25,8 @@ const ADMIN_TOKEN = process.env.API_KEY;
 function formatOrderDate(timestamp) {
   // 請實作此函式
   // 提示：dayjs.unix(timestamp).format('YYYY/MM/DD HH:mm')
-  const result =  dayjs.unix(timestamp).format('YYYY/MM/DD HH:mm');
-  console.log(result);
-  return result;
+    return   dayjs.unix(timestamp).format('YYYY/MM/DD HH:mm');
+
 }
 
 /**
@@ -128,9 +127,7 @@ if (!telRegex.test(data.tel)){
 if (!validPayments.includes(data.payment)){
   errors.push("付款方式必須是 'ATM', 'Credit Card', 'Apple Pay'")};
 
-const isValid = errors.length === 0;
-
-return{isValid,errors}
+return{isValid:errors.length===0,errors}
 }
 
 
@@ -247,7 +244,7 @@ return response.data.orders;
 /*
 比較題：請說明 fetch 和 axios 的主要差異
 
-1. fetch 需要手動呼叫 response.json() 解析回應
+1.fetch 需要手動呼叫 response.json() 解析回應
 
 2.fetch 只有在網路錯誤時才會 reject,HTTP 狀態碼 4xx/5xx 不會被視為錯誤；axios 會將 HTTP 狀態碼 4xx/5xx 視為錯誤並 reject
 
@@ -277,11 +274,14 @@ const OrderService = {
 async function getOrdersWithAxios() {
   // 請實作此函式
   // 提示：axios.get(url, { headers: { authorization: token } })
-const response = await axios.get(`${BASE_URL}/api/livejs/v1/admin/${this.apiPath}/orders`, {
+const response = await axios.get(
+  `${baseURL}/api/livejs/v1/admin/${this.apiPath}/orders`, 
+  {
   headers: { 
-    Authorization: this.token 
+    Authorization: this.token,
   }, 
-});
+},
+);
 return response.data.orders;
 }
   },
@@ -290,12 +290,15 @@ return response.data.orders;
    * 使用 dayjs 格式化訂單日期
    * @param {Array} orders - 訂單陣列
    * @returns {Array} - 為每筆訂單加上 formattedDate 欄位
-   */
+   */ 
   formatOrders(orders) {
     // 請實作此函式
-
-
-
+    return orders.map((order)=> {
+      return {
+        ...order,
+        formattedDate:dayjs.unix(order.createdAt).format("YYYY/MM/DD HH:mm")
+      };
+    });
 
     
   },
@@ -307,7 +310,9 @@ return response.data.orders;
    */
   filterUnpaidOrders(orders) {
     // 請實作此函式
-  },
+return orders.filter((order)=>!order.paid)
+
+  }, 
 
   /**
    * 驗證訂單使用者資料
