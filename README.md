@@ -24,7 +24,7 @@ API_KEY=your-admin-token
 ```
 
 如果還未註冊學院的 [LiveJS 電商 API](https://hexschool.github.io/hexschoolliveswagger/)：
-1. 請進入到[此網站](https://livejs-api.hexschool.io/)，並點選「註冊」，註冊帳號成功後，登入到網站
+1. 請進入到[此網站]( v)，並點選「註冊」，註冊帳號成功後，登入到網站
 2. 登入後即可進入到 API 申請畫面，請依照說明建立 API Path，也可以取得 API Key
 
 ### Step 3：開始寫作業
